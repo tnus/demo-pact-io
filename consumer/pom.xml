@@ -42,6 +42,15 @@
                     <pactBrokerUrl>http://localhost:9292</pactBrokerUrl>
 <!--                    <trimSnapshot>true</trimSnapshot> &lt;!&ndash; Defaults to false &ndash;&gt;-->
                 </configuration>
+                <executions>
+                    <execution>
+                        <id>publish</id>
+                        <phase>install</phase>
+                        <goals>
+                            publish
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>

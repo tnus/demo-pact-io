@@ -1,5 +1,8 @@
 package de.nuss.demo.pactio.consumer;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.Value;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.ParameterizedTypeReference;
@@ -24,18 +27,13 @@ public class AddressbookClient {
   }
 
   public AddressBookEntry findById(String id) {
-//    return webClient.get().uri("/api/entries/{id}", id).accept(MediaType.APPLICATION_JSON).retrieve()
-//        .bodyToMono(AddressBookEntry.class).block();
-
-    String result = webClient.get().uri("/api/entries/{id}", id).accept(MediaType.APPLICATION_JSON).retrieve()
-        .bodyToMono(String.class).block();
-
-    log.info("resutl: {}", result);
-
-    return new AddressBookEntry("1", "sample");
+    return webClient.get().uri("/api/entries/{id}", id).retrieve()
+        .bodyToMono(AddressBookEntry.class).block();
   }
 
-  @Value
+  @Data
+  @NoArgsConstructor
+  @AllArgsConstructor
   public static class AddressBookEntry {
 
     String id;

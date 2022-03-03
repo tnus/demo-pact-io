@@ -24,7 +24,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 class AddressbookClientTest {
 
   @Pact(provider="provider", consumer="consumer")
-  public V4Pact findByIdPact(PactDslWithProvider builder) {
+  public V4Pact pact(PactDslWithProvider builder) {
     return builder
         .given("findById")
         .uponReceiving("Existing id")
@@ -35,35 +35,24 @@ class AddressbookClientTest {
         .body("""
             {"id":"1","name":"Max Mustermann"}
             """, "application/json")
-        .toPact(V4Pact.class);
+        .given("findAll")
+        .uponReceiving("Find all")
+        .path("/api/entries")
+        .method("GET")
+        .willRespondWith()
+        .status(200)
+        .body("""
+            [{"id":"1","name":"Max Mustermann"},{"id":"2","name":"Peter Musterfrau"}]
+            """, "application/json")
+        .toPact().asV4Pact().component1();
   }
 
-//  @Pact(provider="provider", consumer="consumer")
-//  public V4Pact findAllPact(PactDslWithProvider builder) {
-//    return builder
-//        .given("findAll")
-//        .uponReceiving("Find all")
-//        .path("/api/entries")
-//        .method("GET")
-//        .willRespondWith()
-//        .status(200)
-//        .body("""
-//            [{"id":"1","name":"Max Mustermann"},{"id":"2","name":"Peter Musterfrau"}]
-//            """, "application/json")
-//        .toPact(V4Pact.class);
-//  }
-
   @Test
-  void findById(MockServer mockServer) throws IOException {
+  void verifyContracts(MockServer mockServer) throws IOException {
     log.info("server is running on {} and port {}", mockServer.getUrl(), mockServer.getPort());
 
     AddressbookClient.AddressBookEntry addressBookEntry = new AddressbookClient("http://localhost:" + mockServer.getPort()).findById("1");
     assertNotNull(addressBookEntry);
-  }
-
-  @Test
-  void findByAll(MockServer mockServer) throws IOException {
-    log.info("server is running on {} and port {}", mockServer.getUrl(), mockServer.getPort());
 
     List<AddressbookClient.AddressBookEntry> addressBookEntries = new AddressbookClient(
         "http://localhost:" + mockServer.getPort()).findAll();
