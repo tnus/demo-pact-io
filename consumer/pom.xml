@@ -40,14 +40,16 @@
                 <version>4.3.4</version>
                 <configuration>
                     <pactBrokerUrl>http://localhost:9292</pactBrokerUrl>
-<!--                    <trimSnapshot>true</trimSnapshot> &lt;!&ndash; Defaults to false &ndash;&gt;-->
+                    <!--                    <trimSnapshot>true</trimSnapshot> &lt;!&ndash; Defaults to false &ndash;&gt;-->
                 </configuration>
                 <executions>
                     <execution>
                         <id>publish</id>
                         <phase>install</phase>
                         <goals>
-                            publish
+                            <goal>
+                                publish
+                            </goal>
                         </goals>
                     </execution>
                 </executions>

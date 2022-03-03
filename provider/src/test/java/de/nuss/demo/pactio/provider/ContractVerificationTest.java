@@ -19,18 +19,24 @@ import java.io.IOException;
 class ContractVerificationTest {
 
   @State("findById")
-  public void theProductCodeX00001CanBePriced()  {
+  public void findById()  {
 //    reset(productClient);
 //    ProductBuilder product = new ProductBuilder()
 //        .withProductCode("X00001");
 //    when(productClient.find((Set<String>) argThat(contains("X00001")), any())).thenReturn(product);
   }
 
+  @State("findAll")
+  void findAll()  {
+    //    reset(productClient);
+    //    ProductBuilder product = new ProductBuilder()
+    //        .withProductCode("X00001");
+    //    when(productClient.find((Set<String>) argThat(contains("X00001")), any())).thenReturn(product);
+  }
+
   @TestTemplate
   @ExtendWith(PactVerificationSpringProvider.class)
   void pactVerificationTestTemplate(PactVerificationContext context) {
-//    System.setProperty("pact.verifier.publishResults", "true");
-
     context.verifyInteraction();
   }
 }
