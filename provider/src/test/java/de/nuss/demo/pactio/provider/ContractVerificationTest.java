@@ -26,6 +26,11 @@ class ContractVerificationTest {
 //    when(productClient.find((Set<String>) argThat(contains("X00001")), any())).thenReturn(product);
   }
 
+  @State("findByNonExistingId")
+  public void findByNonExistingId()  {
+
+  }
+
   @State("findAll")
   void findAll()  {
     //    reset(productClient);

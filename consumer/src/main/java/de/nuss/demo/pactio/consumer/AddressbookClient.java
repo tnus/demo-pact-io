@@ -7,8 +7,11 @@ import lombok.Value;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.reactive.function.client.WebClient;
+import reactor.core.publisher.Mono;
+
 import java.util.List;
 
 @Slf4j
@@ -27,8 +30,8 @@ public class AddressbookClient {
   }
 
   public AddressBookEntry findById(String id) {
-    return webClient.get().uri("/api/entries/{id}", id).retrieve()
-        .bodyToMono(AddressBookEntry.class).block();
+    return webClient.get().uri("/api/entries/{id}", id).retrieve().onStatus( httpStatus -> httpStatus.value() == 404 ,response -> Mono.empty())
+        .bodyToMono(AddressBookEntry.class).onErrorMap(throwable -> new IllegalStateException("service cannot be called", throwable)).block();
   }
 
   @Data
