@@ -34,6 +34,11 @@ public class AddressbookClient {
         .bodyToMono(AddressBookEntry.class).onErrorMap(throwable -> new IllegalStateException("service cannot be called", throwable)).block();
   }
 
+  public String status() {
+    return webClient.get().uri("/api/status").accept(MediaType.TEXT_PLAIN).retrieve()
+        .bodyToMono(String.class).onErrorReturn("down").block();
+  }
+
   @Data
   @NoArgsConstructor
   @AllArgsConstructor

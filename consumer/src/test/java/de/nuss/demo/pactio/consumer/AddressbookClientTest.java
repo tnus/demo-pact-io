@@ -16,6 +16,7 @@ import org.springframework.web.reactive.function.client.WebClientResponseExcepti
 import java.io.IOException;
 import java.util.List;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -77,6 +78,19 @@ class AddressbookClientTest {
     List<AddressbookClient.AddressBookEntry> addressBookEntries = new AddressbookClient(
         "http://localhost:" + mockServer.getPort()).findAll();
     assertNotNull(addressBookEntries);
+  }
+
+  @Pact(provider = "provider", consumer = "consumer")
+  public V4Pact statusPact(PactDslWithProvider builder) {
+    return builder.given("status").uponReceiving("Status is up").path("/api/status").method("GET").willRespondWith()
+        .status(200).body("up", "text/plain").toPact().asV4Pact().component1();
+  }
+
+  @Test
+  @PactTestFor(pactMethod = "statusPact")
+  void statusTest(MockServer mockServer) throws IOException {
+    assertEquals("up", new AddressbookClient(
+        "http://localhost:" + mockServer.getPort()).status());
   }
 
 }

@@ -45,6 +45,18 @@
                             <name>pact.provider.version</name>
                             <value>${project.version}</value>
                         </property>
+                        <property>
+                            <name>pact.provider.tag</name>
+                            <value>custom.tag</value>
+                        </property>
+                        <property>
+                            <name>pact.provider.branch</name>
+                            <value>develop</value>
+                        </property>
+                        <property>
+                            <name>pact.provider.version.trimSnapshot</name>
+                            <value>true</value>
+                        </property>
                     </systemProperties>
                 </configuration>
             </plugin>
@@ -54,12 +66,25 @@
 <!--                <artifactId>maven</artifactId>-->
 <!--                <version>4.3.4</version>-->
 <!--                <configuration>-->
-<!--                    <reports>-->
-<!--                        <report>console</report>-->
-<!--                        <report>json</report>-->
-<!--                        <report>markdown</report>-->
-<!--                    </reports>-->
+<!--                    <serviceProviders>-->
+<!--                        <serviceProvider>-->
+<!--                            <pactBrokerUrl>http://localhost:9292/</pactBrokerUrl>-->
+<!--                        </serviceProvider>-->
+<!--                    </serviceProviders>-->
+<!--                    <trimSnapshot>true</trimSnapshot>-->
+<!--                    <branchName>feature/status-endpoint</branchName>-->
 <!--                </configuration>-->
+<!--                <executions>-->
+<!--                    <execution>-->
+<!--                        <id>verify</id>-->
+<!--                        <phase>verify</phase>-->
+<!--                        <goals>-->
+<!--                            <goal>-->
+<!--                                verify-->
+<!--                            </goal>-->
+<!--                        </goals>-->
+<!--                    </execution>-->
+<!--                </executions>-->
 <!--            </plugin>-->
         </plugins>
     </build>

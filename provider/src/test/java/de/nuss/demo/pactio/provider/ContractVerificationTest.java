@@ -31,6 +31,11 @@ class ContractVerificationTest {
 
   }
 
+  @State("status")
+  public void status()  {
+
+  }
+
   @State("findAll")
   void findAll()  {
     //    reset(productClient);
